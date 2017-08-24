@@ -13,6 +13,7 @@ class MainWindow : public QMainWindow {
  public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+	void set_field(int x, int y, int value = 0);
 
  private:
     Ui::MainWindow *ui;

@@ -3,6 +3,7 @@
 #endif
 #include <QApplication>
 #include "mainwindow.h"
+#include "sudoku.h"
 
 int main(int argc, char **argv) {
     QApplication app(argc, argv);
