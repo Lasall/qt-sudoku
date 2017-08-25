@@ -12,7 +12,7 @@ class Sudoku {
     int* operator[](const int row);
 
  private:
-	 int fields[9][9];
+    int fields[9][9];
 };
 
 #endif  // SUDOKU_H

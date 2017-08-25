@@ -15,7 +15,8 @@ class MainWindow : public QMainWindow {
     ~MainWindow();
     MainWindow(const MainWindow&) = delete;
     MainWindow operator=(const MainWindow&) = delete;
-	void set_field(int x, int y, int value = 0);
+
+    void set_field(int x, int y, int value = 0);
 
  private:
     Ui::MainWindow *ui;

@@ -12,11 +12,11 @@ Sudoku::~Sudoku() {
 }
 
 int Sudoku::get_field(const int x, const int y) const {
-	return fields[x][y];
+    return fields[x][y];
 }
 
 void Sudoku::set_field(const int x, const int y, const int value) {
-	fields[x][y] = value;
+    fields[x][y] = value;
 }
 
 const int* Sudoku::operator[](const int row) const {
