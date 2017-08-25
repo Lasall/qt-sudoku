@@ -11,7 +11,7 @@ set(CMAKE_AUTOUIC ON)
 find_package(Qt5Widgets)
 
 set(CXX_FLAGS "")
-if(CMAKE_COMPILER_IS_GNUCC)
+if(CMAKE_COMPILER_IS_GNUCC OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     list(APPEND CXX_FLAGS
       -O3 -ffast-math -pedantic -Wall -Wextra -Wcast-align
       -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2
@@ -19,20 +19,24 @@ if(CMAKE_COMPILER_IS_GNUCC)
       -Wold-style-cast -Woverloaded-virtual -Wredundant-decls
       -Wsign-conversion -Wsign-promo -Wswitch-default
       -Wundef -Weffc++
-      -Wlogical-op
-      -Wnoexcept
-      -Wstrict-null-sentinel
-      -fdiagnostics-color=always
-      -Wswitch-bool
-      -Wlogical-not-parentheses
-      -Wsizeof-array-argument
-      -Wbool-compare
       -std=c++1z
-      -Wshift-negative-value
-      -Wshift-overflow=2
-      -Wnull-dereference
-      -Wduplicated-cond
     )
+    if(CMAKE_COMPILER_IS_GNUCC)
+        list(APPEND CXX_FLAGS
+          -Wlogical-op
+          -Wnoexcept
+          -Wstrict-null-sentinel
+          -fdiagnostics-color=always
+          -Wswitch-bool
+          -Wlogical-not-parentheses
+          -Wsizeof-array-argument
+          -Wbool-compare
+          -Wshift-negative-value
+          -Wshift-overflow=2
+          -Wnull-dereference
+          -Wduplicated-cond
+        )
+    endif()
 endif()
 
 file(GLOB SOURCES src/*.cpp src/*.h)
