@@ -94,7 +94,7 @@ void MainWindow::set_field(int x, int y, int value) {
         case 87: ui->label_87->setText(QString::number(value)); break;
         case 88: ui->label_88->setText(QString::number(value)); break;
         default:
-            Q_ASSERT_X(1 != 0, "MainWindow::set_field", "out of scope");
+            Q_ASSERT_X(1 == 0, "MainWindow::set_field", "out of scope");
             break;
     }
 }
