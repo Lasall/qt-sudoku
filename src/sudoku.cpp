@@ -28,7 +28,7 @@ Sudoku::Column Sudoku::operator[](const int row) {
     return Column(fields[row]);
 }
 
-int& Sudoku::Column::operator[](int column) {
+int& Sudoku::Column::operator[](const int column) {
     validate_field_range(column);
     return fields[column];
 }
