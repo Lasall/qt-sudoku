@@ -14,13 +14,13 @@ Sudoku::~Sudoku() {
 int Sudoku::get_field(const int x, const int y) {
     validate_field_range(x);
     validate_field_range(y);
-    return fields[x][y];
+    return fields[y][x];
 }
 
 void Sudoku::set_field(const int x, const int y, const int value) {
     validate_field_range(x);
     validate_field_range(y);
-    fields[x][y] = value;
+    fields[y][x] = value;
 }
 
 Sudoku::Column Sudoku::operator[](const int row) {

@@ -11,7 +11,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::set_field(int x, int y, int value) {
-    switch (x * 10 + y) {
+    switch (y * 10 + x) {
         case 0:  ui->label_00->setText(QString::number(value)); break;
         case 1:  ui->label_01->setText(QString::number(value)); break;
         case 2:  ui->label_02->setText(QString::number(value)); break;
