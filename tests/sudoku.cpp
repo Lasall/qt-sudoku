@@ -84,3 +84,19 @@ TEST(Sudoku, arr_operator_exc) {
     EXPECT_THROW(s[9], std::out_of_range);
     EXPECT_THROW(s[-1], std::out_of_range);
 }
+
+TEST(Sudoku, validate_string) {
+    Sudoku s;
+    try {
+        s.set_field(9, 0, 0);
+        FAIL();
+    } catch (std::out_of_range &e) {
+        EXPECT_STREQ(e.what(), "9 > 8");
+    }
+    try {
+        s.set_field(-1, 0, 0);
+        FAIL();
+    } catch (std::out_of_range &e) {
+        EXPECT_STREQ(e.what(), "-1 < 0");
+    }
+}

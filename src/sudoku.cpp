@@ -36,5 +36,5 @@ int& Sudoku::Column::operator[](const int column) {
 
 void Sudoku::validate_field_range(const int field) {
     if (field < 0 || field > 8)
-        throw std::out_of_range(std::to_string(field) + " != [0-8]");
+        throw std::out_of_range(std::to_string(field) + ((field < 0) ? " < 0" : " > 8"));
 }
