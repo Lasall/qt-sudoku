@@ -13,7 +13,7 @@ set(CMAKE_AUTOUIC ON)
 find_package(Qt5Widgets)
 
 set(CXX_FLAGS "")
-if(CMAKE_COMPILER_IS_GNUCC OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+if(CMAKE_COMPILER_IS_GNUCC OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
     list(APPEND CXX_FLAGS
       -O3 -ffast-math -pedantic -Wall -Wextra -Wcast-align
       -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2
@@ -85,12 +85,15 @@ if(TESTS)
     set(Pthread "-pthread")
   endif()
   ExternalProject_Get_Property(googletest BINARY_DIR)
-  target_link_libraries(qt-sudoku_tests -Wl,-O3
+  if(UNIX)
+	set(UNIX_LDD_FLAGS "-Wl,-O3")
+  endif()
+  target_link_libraries(qt-sudoku_tests ${UNIX_LDD_FLAGS}
     debug "${BINARY_DIR}/googlemock/gtest/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${Suffix}"
     optimized "${BINARY_DIR}/googlemock/gtest/${CMAKE_FIND_LIBRARY_PREFIXES}gtest${Suffix}"
     ${Pthread}
   )
-  target_link_libraries(qt-sudoku_tests -Wl,-O3
+  target_link_libraries(qt-sudoku_tests ${UNIX_LDD_FLAGS}
     debug "${BINARY_DIR}/googlemock/gtest/DebugLibs/${CMAKE_FIND_LIBRARY_PREFIXES}gtest_main${Suffix}"
     optimized "${BINARY_DIR}/googlemock/gtest/${CMAKE_FIND_LIBRARY_PREFIXES}gtest_main${Suffix}"
     ${Pthread}
