@@ -109,4 +109,10 @@ if(TESTS)
     target_compile_options(qt-sudoku_tests PUBLIC ${CXX_FLAGS})
 endif()
 
+find_program(MEMORYCHECK_COMMAND valgrind)
+set(MEMORYCHECK_COMMAND_OPTIONS "--trace-children=yes \
+                                 --leak-check=full \
+                                 --show-reachable=yes"
+)
+
 target_link_libraries(qt-sudoku Qt5::Widgets)
