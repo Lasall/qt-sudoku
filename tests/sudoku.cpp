@@ -35,6 +35,9 @@ TEST(Sudoku, setter) {
     s.set_field(8, 8, 1);
     EXPECT_EQ(s.get_field(8, 8), 1);
     EXPECT_EQ(s[8][8], 1);
+    s.set_field(8, 8, 9);
+    EXPECT_EQ(s.get_field(8, 8), 9);
+    EXPECT_EQ(s[8][8], 9);
 }
 
 TEST(Sudoku, setter_exc) {
@@ -44,7 +47,7 @@ TEST(Sudoku, setter_exc) {
     EXPECT_THROW(s.set_field(9, 0, 1), std::out_of_range);
     EXPECT_THROW(s.set_field(0, 9, 1), std::out_of_range);
     EXPECT_THROW(s.set_field(0, 8, -1), std::out_of_range);
-    EXPECT_THROW(s.set_field(0, 8, 9), std::out_of_range);
+    EXPECT_THROW(s.set_field(0, 8, 10), std::out_of_range);
 }
 
 TEST(Sudoku, Column_arr_operator) {
@@ -64,7 +67,7 @@ TEST(Sudoku, Column_arr_operator_exc) {
 
 TEST(Sudoku, arr_operator) {
     Sudoku s;
-    int arr[] = {6, 0, 2, 2, 4, 5, 8, 0, 6};
+    int arr[] = {6, 1, 2, 2, 4, 5, 8, 9, 6};
     for (int i = 0; i < 9; ++i) {
         for (int j = 0; j < 9; ++j) {
             s.set_field(j, i, arr[j]);

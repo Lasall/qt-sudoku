@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 2.8.11)
 project(qt-sudoku)
 
 option(TESTS "Enable Tests" OFF)
+option(COVERAGE "Enable gcov support." OFF)
 
 #if(WIN32)
     set(CMAKE_PREFIX_PATH "C:\\Qt\\5.9.1\\msvc2015_64\\")
@@ -39,6 +40,25 @@ if(CMAKE_COMPILER_IS_GNUCC OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
           -Wduplicated-cond
         )
     endif()
+    if(COVERAGE)
+      set(CMAKE_BUILD_TYPE Debug)
+      set(TESTS ON)
+      list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+      include(CodeCoverage)
+      list(APPEND CXX_FLAGS
+        -g -O0 -fprofile-arcs -ftest-coverage
+        -DSTRONG_TYPE_COMPILE
+      )
+      if(CMAKE_COMPILER_IS_GNUCC)
+        list(APPEND CXX_FLAGS
+          -fno-inline -fno-inline-small-functions -fno-default-inline
+        )
+      endif()
+      setup_target_for_coverage(qt-sudoku_coverage qt-sudoku_tests
+                                "${PROJECT_BINARY_DIR}/coverage")
+    endif()
+else()
+  set(COVERAGE OFF)
 endif()
 
 file(GLOB SOURCES "src/*.cpp")
@@ -72,6 +92,7 @@ if(TESTS)
   file(GLOB SOURCES_TESTS "${PROJECT_SOURCE_DIR}/tests/*.cpp")
   list(APPEND SOURCES_TESTS ${SOURCES})
   list(REMOVE_ITEM SOURCES_TESTS "${PROJECT_SOURCE_DIR}/src/main.cpp")
+  list(REMOVE_ITEM SOURCES_TESTS "${PROJECT_SOURCE_DIR}/src/mainwindow.cpp")
   add_executable(qt-sudoku_tests "${SOURCES_TESTS}")
   add_dependencies(qt-sudoku_tests googletest)
 
@@ -98,7 +119,6 @@ if(TESTS)
     optimized "${BINARY_DIR}/googlemock/gtest/${CMAKE_FIND_LIBRARY_PREFIXES}gtest_main${Suffix}"
     ${Pthread}
   )
-  target_link_libraries(qt-sudoku_tests Qt5::Widgets)
 
   add_test(Sudoku qt-sudoku_tests --gtest_filter=Sudoku.*)
 endif()
@@ -107,6 +127,10 @@ add_executable(qt-sudoku ${SOURCES})
 target_compile_options(qt-sudoku PUBLIC ${CXX_FLAGS})
 if(TESTS)
     target_compile_options(qt-sudoku_tests PUBLIC ${CXX_FLAGS})
+endif()
+if(COVERAGE)
+    target_link_libraries(qt-sudoku gcov --coverage)
+    target_link_libraries(qt-sudoku_tests gcov --coverage)
 endif()
 
 find_program(MEMORYCHECK_COMMAND valgrind)

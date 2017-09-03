@@ -20,7 +20,7 @@ int Sudoku::get_field(const int x, const int y) {
 void Sudoku::set_field(const int x, const int y, const int value) {
     validate_field_range(x);
     validate_field_range(y);
-    validate_field_range(value);
+    validate_field_range(value-1);
     fields[y][x] = value;
 }
 
