@@ -166,10 +166,10 @@ class Sudoku {
     };
 
     iterator_square begin_square(const int square) {
-        return iterator_square(&fields[square%3][square%3 * 3]);
+        return iterator_square(&fields[square/3*3][square%3*3]);
     }
     iterator_square end_square(const int square) {
-        return iterator_square(&fields[square%3 + 3][square%3 * 3]);
+        return iterator_square(&fields[square/3*3 + 3][square%3*3]);
     }
 
  private:
