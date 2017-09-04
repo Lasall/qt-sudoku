@@ -35,9 +35,9 @@ class Sudoku {
         ~iterator_row() {row = 0;}
 
         iterator_row& operator++() {++row; return *this;}
-        inline iterator_row operator++(int) {
+        iterator_row operator++(int) {
             iterator_row tmp(*this);
-            operator--();
+            operator++();
             return tmp;
         }
         iterator_row& operator--() {--row; return *this;}
