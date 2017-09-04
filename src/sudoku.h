@@ -80,7 +80,7 @@ class Sudoku {
         iterator_column& operator++() {column += 9; return *this;}
         iterator_column operator++(int) {
             iterator_column tmp(*this);
-            operator--();
+            operator++();
             return tmp;
         }
         iterator_column& operator--() {column -= 9; return *this;}
@@ -133,7 +133,7 @@ class Sudoku {
         }
         iterator_square operator++(int) {
             iterator_square tmp(*this);
-            operator--();
+            operator++();
             return tmp;
         }
         iterator_square& operator--() {
