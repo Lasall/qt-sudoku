@@ -12,10 +12,6 @@ class Sudoku {
     Sudoku();
     ~Sudoku();
 
-    int get_field(const int x, const int y);  // throws std::out_of_range
-    void set_field(const int x, const int y, const int value);  // throws std::out_of_range
-
-
     class Field {
      public:
          Field();
@@ -37,6 +33,9 @@ class Sudoku {
          std::set<int> suggestions;
          bool processed;
     };
+
+    const Field& get_field(const int x, const int y);  // throws std::out_of_range
+    void set_field(const int x, const int y, const int value);  // throws std::out_of_range
 
     class Column{
      public:

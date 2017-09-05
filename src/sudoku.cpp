@@ -46,7 +46,7 @@ void Sudoku::Field::update_suggestions(std::vector<int> &suggestions) {
     }
 }
 
-int Sudoku::get_field(const int x, const int y) {
+const Sudoku::Field& Sudoku::get_field(const int x, const int y) {
     validate_field_range(x);
     validate_field_range(y);
     return fields[y][x];
@@ -56,7 +56,7 @@ void Sudoku::set_field(const int x, const int y, const int value) {
     validate_field_range(x);
     validate_field_range(y);
     validate_field_range(value-1);
-    fields[y][x] = value;
+    fields[y][x].set_value(value);
 }
 
 Sudoku::Column Sudoku::operator[](const int row) {
