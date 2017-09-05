@@ -4,6 +4,8 @@
 #include <string>
 #include <iterator>
 #include <utility>
+#include <vector>
+#include <set>
 
 class Sudoku {
  public:
@@ -13,23 +15,46 @@ class Sudoku {
     int get_field(const int x, const int y);  // throws std::out_of_range
     void set_field(const int x, const int y, const int value);  // throws std::out_of_range
 
-    class Column {
+
+    class Field {
      public:
-         Column(int fields[]) : fields(fields) {}
-         int& operator[](const int column);  // throws std::out_of_range
+         Field();
+         Field(const int value);
+         Field& operator=(int& value);
+         ~Field();
+
+         operator int() const { return value; }
+
+         int get_value() const { return value; }
+         void set_value(const int value);
+         bool get_processed() const { return processed; };
+
+         void update_suggestions(std::vector<int> &suggestions);
+
 
      private:
-         int* fields;
+         int value;
+         std::set<int> suggestions;
+         bool processed;
+    };
+
+    class Column{
+     public:
+         Column(Field* fields) : fields(fields) {}
+         Field& operator[](const int column);  // throws std::out_of_range
+
+     private:
+         Field* fields;
     };
 
     Column operator[](const int row);  // throws std::out_of_range
 
-    class iterator_row : std::iterator<std::bidirectional_iterator_tag, int> {
+    class iterator_row : std::iterator<std::bidirectional_iterator_tag, Field> {
      private:
-        int* row;
+        Field* row;
 
      public:
-        iterator_row(int* row) : row(row) {}
+        iterator_row(Field* row) : row(row) {}
         iterator_row(const iterator_row& it) : row(it.row) {}
         iterator_row& operator=(const iterator_row& rhs) {row = rhs.row; return *this;}
         ~iterator_row() {row = 0;}
@@ -50,8 +75,8 @@ class Sudoku {
         bool operator==(const iterator_row& rhs) const {return row == rhs.row;}
         bool operator!=(const iterator_row& rhs) const {return row != rhs.row;}
 
-        int& operator*() {return *row;}
-        int* operator->() {return row;}
+        Field& operator*() {return *row;}
+        Field* operator->() {return row;}
 
         friend void swap(iterator_row& lhs, iterator_row& rhs) {
             iterator_row tmp(lhs);
@@ -67,12 +92,12 @@ class Sudoku {
         return iterator_row(&fields[row+1][0]);
     }
 
-    class iterator_column : std::iterator<std::bidirectional_iterator_tag, int> {
+    class iterator_column : std::iterator<std::bidirectional_iterator_tag, Field> {
      private:
-        int* column;
+        Field* column;
 
      public:
-        iterator_column(int* column) : column(column)  {}
+        iterator_column(Field* column) : column(column)  {}
         iterator_column(const iterator_column& it) : column(it.column) {}
         iterator_column& operator=(const iterator_column& rhs) {column = rhs.column; return *this;}
         ~iterator_column() {column = 0;}
@@ -93,8 +118,8 @@ class Sudoku {
         bool operator==(const iterator_column& rhs) const {return column == rhs.column;}
         bool operator!=(const iterator_column& rhs) const {return column != rhs.column;}
 
-        int& operator*() {return *column;}
-        int* operator->() {return column;}
+        Field& operator*() {return *column;}
+        Field* operator->() {return column;}
 
         friend void swap(iterator_column& lhs, iterator_column& rhs) {
             iterator_column tmp(lhs);
@@ -110,13 +135,13 @@ class Sudoku {
         return iterator_column(&fields[9][column]);
     }
 
-    class iterator_square : std::iterator<std::bidirectional_iterator_tag, int> {
+    class iterator_square : std::iterator<std::bidirectional_iterator_tag, Field> {
      private:
-        int* square;
+        Field* square;
         int index;
 
      public:
-        iterator_square(int* square) : square(square), index(0) {}
+        iterator_square(Field* square) : square(square), index(0) {}
         iterator_square(const iterator_square& it) : square(it.square), index(it.index) {}
         iterator_square& operator=(const iterator_square& rhs) {square = rhs.square; return *this;}
         ~iterator_square() {square = 0;}
@@ -155,8 +180,8 @@ class Sudoku {
         bool operator==(const iterator_square& rhs) const {return square == rhs.square;}
         bool operator!=(const iterator_square& rhs) const {return square != rhs.square;}
 
-        int& operator*() {return *square;}
-        int* operator->() {return square;}
+        Field& operator*() {return *square;}
+        Field* operator->() {return square;}
 
         friend void swap(iterator_square& lhs, iterator_square& rhs) {
             iterator_square tmp(lhs);
@@ -173,7 +198,7 @@ class Sudoku {
     }
 
  private:
-    int fields[9][9];
+    Field fields[9][9];
     static void validate_field_range(const int field);  // throws::std::out_of_range
 };
 

@@ -72,7 +72,9 @@ TEST(Sudoku, setter_exc) {
 }
 
 TEST(Sudoku, Column_arr_operator) {
-    int arr[] = {0, 1, 2, 2, 4, 5, 8, -1, 9};
+    Sudoku::Field arr[] = {Sudoku::Field(0), Sudoku::Field(1), Sudoku::Field(2),
+                           Sudoku::Field(2), Sudoku::Field(4), Sudoku::Field(5),
+                           Sudoku::Field(8), Sudoku::Field(-1), Sudoku::Field(9)};
     Sudoku::Column c(arr);
     for (int i = 0; i < 9; ++i) {
         ASSERT_EQ(c[i], arr[i]);
@@ -80,7 +82,9 @@ TEST(Sudoku, Column_arr_operator) {
 }
 
 TEST(Sudoku, Column_arr_operator_exc) {
-    int arr[] = {0, 1, 2, 2, 4, 5, 8, -1, 9};
+    Sudoku::Field arr[] = {Sudoku::Field(0), Sudoku::Field(1), Sudoku::Field(2),
+                           Sudoku::Field(2), Sudoku::Field(4), Sudoku::Field(5),
+                           Sudoku::Field(8), Sudoku::Field(-1), Sudoku::Field(9)};
     Sudoku::Column c(arr);
     EXPECT_THROW(c[9], std::out_of_range);
     EXPECT_THROW(c[-1], std::out_of_range);

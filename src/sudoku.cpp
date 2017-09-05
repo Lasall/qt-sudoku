@@ -1,14 +1,49 @@
 #include "sudoku.h"
+#include <algorithm>
 
 Sudoku::Sudoku() {
-    for (int i = 0; i < 9; ++i) {
-        for (int j = 0; j < 9; ++j) {
-            fields[i][j] = 0;
-        }
-    }
 }
 
 Sudoku::~Sudoku() {
+}
+
+Sudoku::Field::Field() : value(0),
+                         suggestions(std::set<int>()),
+                         processed(false) {
+}
+
+Sudoku::Field::Field(const int value) : value(value),
+                                        suggestions(std::set<int>()),
+                                        processed(false) {
+}
+
+Sudoku::Field& Sudoku::Field::operator=(int& value) {
+    set_value(value);
+    return *this;
+}
+
+Sudoku::Field::~Field() {
+}
+
+inline void Sudoku::Field::set_value(const int value) {
+    this->value = value;
+    suggestions = std::set<int>();
+    processed = false;
+}
+
+void Sudoku::Field::update_suggestions(std::vector<int> &suggestions) {
+    if (!processed) {
+        std::for_each(suggestions.begin(),
+                      suggestions.end(),
+                      [this](int &v){this->suggestions.insert(v);});
+        processed = true;
+    } else {
+        std::set<int> intersect;
+        std::set_intersection(this->suggestions.begin(), this->suggestions.end(),
+                              suggestions.begin(), suggestions.end(),
+                              std::inserter(intersect, intersect.begin()));
+        this->suggestions = intersect;
+    }
 }
 
 int Sudoku::get_field(const int x, const int y) {
@@ -29,7 +64,7 @@ Sudoku::Column Sudoku::operator[](const int row) {
     return Column(fields[row]);
 }
 
-int& Sudoku::Column::operator[](const int column) {
+Sudoku::Field& Sudoku::Column::operator[](const int column) {
     validate_field_range(column);
     return fields[column];
 }

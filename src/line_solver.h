@@ -20,7 +20,7 @@ class LineSolver : public Solver {
                     const C& end) {
         bool found = false;
         std::vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        int* empty_it = 0;
+        Sudoku::Field* empty_it = 0;
         for (auto it = begin; it != end; ++it) {
             if (*it == 0) {
                 if (empty_it == 0) {
