@@ -71,6 +71,61 @@ TEST(Sudoku, setter_exc) {
     EXPECT_THROW(s.set_field(0, 8, 10), std::out_of_range);
 }
 
+TEST(Sudoku, Field_construct) {
+    Sudoku::Field f;
+    EXPECT_EQ(f.get_value(), 0);
+    EXPECT_EQ(f, 0);
+    EXPECT_FALSE(f.get_processed());
+    EXPECT_EQ(f.get_suggestions().size(), 0);
+
+    Sudoku::Field f2(1);
+    EXPECT_EQ(f2.get_value(), 1);
+    EXPECT_EQ(f2, 1);
+    EXPECT_FALSE(f2.get_processed());
+    EXPECT_EQ(f2.get_suggestions().size(), 0);
+}
+
+TEST(Sudoku, Field_assign) {
+    Sudoku::Field f;
+    f = 1;
+    EXPECT_EQ(f.get_value(), 1);
+    EXPECT_EQ(f, 1);
+    EXPECT_FALSE(f.get_processed());
+    EXPECT_EQ(f.get_suggestions().size(), 0);
+
+    f.set_value(2);
+    EXPECT_EQ(f.get_value(), 2);
+    EXPECT_EQ(f, 2);
+    EXPECT_FALSE(f.get_processed());
+    EXPECT_EQ(f.get_suggestions().size(), 0);
+}
+
+TEST(Sudoku, Field_upd_suggs) {
+    Sudoku::Field f;
+    std::vector<int> v {1, 2, 3, 4};
+    std::set<int> vs {1, 2, 3, 4};
+    std::vector<int> v2 {2, 3, 9};
+    std::set<int> vs2 {2, 3};
+
+    f.update_suggestions(v);
+    EXPECT_EQ(f.get_value(), 0);
+    EXPECT_EQ(f, 0);
+    EXPECT_TRUE(f.get_processed());
+    EXPECT_EQ(f.get_suggestions(), vs);
+
+    f.update_suggestions(v2);
+    EXPECT_EQ(f.get_value(), 0);
+    EXPECT_EQ(f, 0);
+    EXPECT_TRUE(f.get_processed());
+    EXPECT_EQ(f.get_suggestions(), vs2);
+
+    f.set_value(1);
+    EXPECT_EQ(f.get_value(), 1);
+    EXPECT_EQ(f, 1);
+    EXPECT_FALSE(f.get_processed());
+    EXPECT_EQ(f.get_suggestions().size(), 0);
+}
+
 TEST(Sudoku, Column_arr_operator) {
     Sudoku::Field arr[] = {Sudoku::Field(0), Sudoku::Field(1), Sudoku::Field(2),
                            Sudoku::Field(2), Sudoku::Field(4), Sudoku::Field(5),
