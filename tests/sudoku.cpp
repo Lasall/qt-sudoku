@@ -475,6 +475,42 @@ TEST(Sudoku, iterator_square_swap) {
     }
 }
 
+TEST(Sudoku, generate) {
+    for (int j = 0; j < 100; ++j) {
+        Sudoku s = generateSudoku();
+        for (int i = 0; i < 9; ++i) {
+            std::set<int> numbers {1, 2, 3, 4, 5, 6, 7, 8, 9};
+            for (auto it = s.begin_row(i); it != s.end_row(i); ++it) {
+                if (*it == 0)
+                    continue;
+                auto nit = numbers.find(*it);
+                ASSERT_NE(nit, numbers.end());
+                numbers.erase(nit);
+            }
+        }
+        for (int i = 0; i < 9; ++i) {
+            std::set<int> numbers {1, 2, 3, 4, 5, 6, 7, 8, 9};
+            for (auto it = s.begin_column(i); it != s.end_column(i); ++it) {
+                if (*it == 0)
+                    continue;
+                auto nit = numbers.find(*it);
+                ASSERT_NE(nit, numbers.end());
+                numbers.erase(nit);
+            }
+        }
+        for (int i = 0; i < 9; ++i) {
+            std::set<int> numbers {1, 2, 3, 4, 5, 6, 7, 8, 9};
+            for (auto it = s.begin_square(i); it != s.end_square(i); ++it) {
+                if (*it == 0)
+                    continue;
+                auto nit = numbers.find(*it);
+                ASSERT_NE(nit, numbers.end());
+                numbers.erase(nit);
+            }
+        }
+    }
+}
+
 Sudoku init_sudoku(const int (&arr)[9][9]) {
     Sudoku s;
     for (int i = 0; i < 9; ++i) {
