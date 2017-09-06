@@ -73,3 +73,22 @@ void Sudoku::validate_field_range(const int field) {
     if (field < 0 || field > 8)
         throw std::out_of_range(std::to_string(field) + ((field < 0) ? " < 0" : " > 8"));
 }
+
+Sudoku generateSudoku() {
+    int field[9][9] = { 5,3,4,6,7,8,9,1,2,
+                        6,7,2,1,9,5,3,4,8,
+                        1,9,8,3,4,2,5,6,7,
+                        8,5,9,7,6,1,4,2,3,
+                        4,2,6,8,5,3,7,9,1,
+                        7,1,3,9,2,4,8,5,6,
+                        9,6,1,5,3,7,2,8,4,
+                        2,8,7,4,1,9,6,3,5,
+                        3,4,5,2,8,6,1,7,9 };
+    Sudoku sud;
+    for (int i = 0; i < 9; ++i) {
+        for (int j = 0; j < 9; ++j) {
+            sud.set_field(i, j, field[i][j]);
+        }
+    }
+    return sud;
+}

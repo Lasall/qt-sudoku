@@ -202,4 +202,6 @@ class Sudoku {
     static void validate_field_range(const int field);  // throws::std::out_of_range
 };
 
+Sudoku generateSudoku();
+
 #endif  // SUDOKU_H
