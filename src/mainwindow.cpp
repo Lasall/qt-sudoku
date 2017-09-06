@@ -1,16 +1,40 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "line_solver.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent), ui(new Ui::MainWindow) {
+    QMainWindow(parent), ui(new Ui::MainWindow), s(Sudoku()) {
     ui->setupUi(this);
+
+    connect(ui->button_solve, SIGNAL(released()), this, SLOT(solve()));
 }
 
 MainWindow::~MainWindow() {
     delete ui;
 }
 
+void MainWindow::read(const Sudoku& s) {
+    this->s = s;
+    update();
+}
+
+void MainWindow::update() {
+    for (int i = 0; i < 9; ++i) {
+        for (int j = 0; j < 9; ++j) {
+            set_field(i, j, s[i][j]);
+        }
+    }
+}
+
+void MainWindow::solve() {
+    LineSolver ls;
+    ls.solve(s);
+    update();
+}
+
 void MainWindow::set_field(int x, int y, int value) {
+    if (value == 0)
+        return;
     switch (y * 10 + x) {
         case 0:  ui->label_00->setText(QString::number(value)); break;
         case 1:  ui->label_01->setText(QString::number(value)); break;
