@@ -10,10 +10,10 @@ int main(int argc, char **argv) {
     MainWindow w;
     w.show();
 
-    for (int j = 0; j < 9; j++) {
-        for (int i = 0; i < 9; i++) {
-
-            w.set_field(j, i, 1);
+    Sudoku s = generateSudoku();
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            w.set_field(i, j, s[i][j]);
         }
     }
     

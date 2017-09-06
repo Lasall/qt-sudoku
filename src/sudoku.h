@@ -23,8 +23,8 @@ class Sudoku {
 
          int get_value() const { return value; }
          void set_value(const int value);
-         bool get_processed() const { return processed; };
-         const std::set<int>& get_suggestions() const { return suggestions; };
+         bool get_processed() const { return processed; }
+         const std::set<int>& get_suggestions() const { return suggestions; }
 
          void update_suggestions(std::vector<int> &suggestions);
 

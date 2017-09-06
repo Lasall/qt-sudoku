@@ -87,7 +87,7 @@ void MainWindow::set_field(int x, int y, int value) {
         case 80: ui->label_80->setText(QString::number(value)); break;
         case 81: ui->label_81->setText(QString::number(value)); break;
         case 82: ui->label_82->setText(QString::number(value)); break;
-		case 83: ui->label_83->setText(QString::number(value)); break;
+        case 83: ui->label_83->setText(QString::number(value)); break;
         case 84: ui->label_84->setText(QString::number(value)); break;
         case 85: ui->label_85->setText(QString::number(value)); break;
         case 86: ui->label_86->setText(QString::number(value)); break;
