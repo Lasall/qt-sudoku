@@ -13,15 +13,15 @@ bool LineSolver::solve(Sudoku& s) {
     do {
         found = false;
         for (int i = 0; i < 9; ++i) {
-            if (solve_line(s.begin_row(i), s.end_row(i)))
+            if (solve_line(s.get_it_row(i), &Sudoku::iterator_sudoku::inc_row))
                 found = true;
         }
         for (int i = 0; i < 9; ++i) {
-            if (solve_line(s.begin_column(i), s.end_column(i)))
+            if (solve_line(s.get_it_column(i), &Sudoku::iterator_sudoku::inc_column))
                 found = true;
         }
         for (int i = 0; i < 9; ++i) {
-            if (solve_line(s.begin_square(i), s.end_square(i)))
+            if (solve_line(s.get_it_square(i), &Sudoku::iterator_sudoku::inc_square))
                 found = true;
         }
         if (found)
