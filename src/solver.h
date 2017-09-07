@@ -8,6 +8,7 @@ class Solver {
     virtual ~Solver() {};
 
     virtual bool solve(Sudoku& s) = 0;
+    virtual bool solve_step(Sudoku& s) = 0;
 };
 
 #endif  // SOLVER_H

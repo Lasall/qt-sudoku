@@ -121,6 +121,7 @@ if(TESTS)
   )
 
   add_test(Sudoku qt-sudoku_tests --gtest_filter=Sudoku.*)
+  add_test(Sudoku qt-sudoku_tests --gtest_filter=LineSolver.*)
 endif()
 
 add_executable(qt-sudoku ${SOURCES})
